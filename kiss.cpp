@@ -1,8 +1,8 @@
 #include "kiss.h"
 
-Kiss::Kiss(int baud, int rxIndicationPin, int pttPin, int rxBufferSize, int txBufferSize) {
+Kiss::Kiss(int baud, int rxIndicationPin,  int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize) {
   _baud = baud;
-  _hdlcTnc = new HdlcTnc(rxIndicationPin, pttPin, rxBufferSize, txBufferSize);
+  _hdlcTnc = new HdlcTnc(rxIndicationPin, txIndicationPin, pttPin, rxBufferSize, txBufferSize);
 }
 
 void Kiss::begin() {

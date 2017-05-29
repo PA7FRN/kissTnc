@@ -1,6 +1,6 @@
 #include "hdlcTnc.h"
 
-HdlcTnc::HdlcTnc(int rxIndicationPin, int pttPin, int rxBufferSize, int txBufferSize) {
+HdlcTnc::HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize) {
   _crcTable = new HdlcCrcTable();
   _rxBuffer = new HdlcFrameBuffer(false, _crcTable, rxBufferSize);
   _txBuffer = new HdlcFrameBuffer(true , _crcTable, txBufferSize);
@@ -10,6 +10,10 @@ HdlcTnc::HdlcTnc(int rxIndicationPin, int pttPin, int rxBufferSize, int txBuffer
   if (rxIndicationPin > 0 ) {
     pinMode(rxIndicationPin, OUTPUT);
     _rxIndicationPin = rxIndicationPin;
+  }
+  if (txIndicationPin > 0 ) {
+    pinMode(txIndicationPin, OUTPUT);
+    _txIndicationPin = txIndicationPin;
   }
   if (pttPin > 0 ) {
     pinMode(pttPin, OUTPUT);
@@ -119,9 +123,11 @@ void HdlcTnc::setLoopbackTest(boolean on) {
 void HdlcTnc::setPtt(boolean on) {
   if (on) {
     digitalWrite(_pttPin, HIGH);
+    digitalWrite(_txIndicationPin, HIGH);
   }
   else {
     digitalWrite(_pttPin, LOW);
+    digitalWrite(_txIndicationPin, LOW);
   }
 }
 

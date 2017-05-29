@@ -17,7 +17,7 @@
 
 class HdlcTnc {
   public:
-    HdlcTnc(int rxIndicationPin, int pttPin, int rxBufferSize, int txBufferSize);
+    HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize);
     void hdlcTask();
     void addByteToTxBuf(byte newByte);
     void addFrameEndToTxBuf();
@@ -36,6 +36,7 @@ class HdlcTnc {
     HdlcAfskTx* _afskTx;
     AfskSampler* _afskSampler;
     int _rxIndicationPin = 0;
+    int _txIndicationPin = 0;
     int _pttPin = 0;
     byte _persistence = DEFAULT_PERSISTENCE;
     int _slotTime = DEFAULT_SLOT_TIME;
