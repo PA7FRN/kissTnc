@@ -12,7 +12,7 @@ Default following pins are used:
  The used analog input is A0
  The four pins for generating the AFSK modulation signal are pin 4, 5, 6 and 7.
 
-The PTT and LED pins can be changed in the sketch by editing the defines in KissTnc INO.
+The PTT and LED pins can be changed in the sketch by editing the defines in KissTnc.ino.
 
 It is advised to use the squelch on the radio to have a good carry detection.
 
@@ -21,16 +21,16 @@ KissTnc is compatible with the KISS protocol as described at:
 http://www.ax25.net/kiss.aspx
 
 The foloowing KISS commands are implemented:
-*   CMD_DATA_FRAME 0
-*   CMD_TX_DELAY 
-*   CMD_P 
-*   CMD_SLOT_TIME
-*   CMD_FULL_DUPLEX
+*   CMD_DATA_FRAME (0x00)
+*   CMD_TX_DELAY (0x01)
+*   CMD_P (0x02)
+*   CMD_SLOT_TIME (0x03)
+*   CMD_FULL_DUPLEX (0x05)
 	
 For testing purpose an additional command is implemented:
-*   CMD_LOOPBACK_TEST With enabling this function, packets transmitted from the host are routed back to the receiving part of the software. Instead of transmitting the packets, a constant 1200Hz tone is audible at the modulation output. After any change of the code, the software can be tested by doing a loopback test. The packet returned back to the host must be the same as the original ones. The signal set on the modulation output must be 1200Hz (+/-1). If this is not the case the ISR is not returning on time.
+*   CMD_LOOPBACK_TEST (0xfe) With enabling this function, packets transmitted from the host are routed back to the receiving part of the software. Instead of transmitting the packets, a constant 1200Hz tone is audible at the modulation output. After any change of the code, the software can be tested by doing a loopback test. The packet returned back to the host must be the same as the original ones. The signal set on the modulation output must be a stable 1200Hz (+/-1) tone. If this frequency is not 1200Hz or is not stable, the ISR is not returning on time.
 
 Following is not implemented:
-*   CMD_TX_TAIL (obsolete)
-*   CMD_SET_HARDWARE
-*   CMD_RETURN
+*   CMD_TX_TAIL (0x04) (obsolete)
+*   CMD_SET_HARDWARE (0x06)
+*   CMD_RETURN (0xff)
