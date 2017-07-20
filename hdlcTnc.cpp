@@ -76,7 +76,6 @@ void HdlcTnc::hdlcTask() {
       break;
     case HS_TX_FRAME:
       if (_afskTx->getReady()) {
-        //TODO: key down transmitter
         setPtt(false);
         _hdlcState = HS_IDLE;
       }

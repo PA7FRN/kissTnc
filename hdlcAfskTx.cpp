@@ -19,7 +19,7 @@ byte HdlcAfskTx::encodeSample() {
 
   byte loopBackSample = 0x80;
   if (loopbackTest) {
-    PORTD = pgm_read_byte(&sinusTable[_n7_5degTest]);
+    PORTD = (pgm_read_byte(&sinusTable[_n7_5degTest]) & AFSK_MASK) | (PORTD & NON_AFSK_NASK);
     _n7_5degTest += MARK_SAMPLE_DEG_STEP;
     if (_n7_5degTest >= SIN_TABLE_SIZE) {
       _n7_5degTest -= SIN_TABLE_SIZE;
@@ -27,7 +27,7 @@ byte HdlcAfskTx::encodeSample() {
     loopBackSample = pgm_read_byte(&sinusTable[_n7_5deg]);
   } 
   else {
-    PORTD = pgm_read_byte(&sinusTable[_n7_5deg]);
+    PORTD = (pgm_read_byte(&sinusTable[_n7_5deg]) & AFSK_MASK) | (PORTD & NON_AFSK_NASK);
   }
 
   if (_mark) {

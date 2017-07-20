@@ -8,6 +8,8 @@
 #define AFSK_PIN_5 5
 #define AFSK_PIN_6 6
 #define AFSK_PIN_7 7
+#define AFSK_MASK     0xf0
+#define NON_AFSK_NASK 0x0f
 
 #define SIN_TABLE_SIZE        48 
 #define MARK_SAMPLE_DEG_STEP   6
