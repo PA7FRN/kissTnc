@@ -9,7 +9,6 @@ HdlcFrameBuffer::HdlcFrameBuffer(boolean tx, HdlcCrcTable* crcTable, int bufferS
 }
 
 boolean HdlcFrameBuffer::push(byte in) {
-  boolean result = spaceAvailable(); 
   if (spaceAvailable()) {
     _bufferData[_pushPosition] = in;
     incrementPushPosition();
@@ -112,10 +111,10 @@ void HdlcFrameBuffer::startNewFrame() {
 }
 
 void HdlcFrameBuffer::incrementPushPosition() {
-	_pushPosition++;
-	if (_pushPosition >= BUFFER_SIZE) {
-	  _pushPosition=0;
-	}
+  _pushPosition++;
+  if (_pushPosition >= BUFFER_SIZE) {
+    _pushPosition=0;
+  }
 }
 
 void HdlcFrameBuffer::incrementPopPosition(int count) {
@@ -126,10 +125,10 @@ void HdlcFrameBuffer::incrementPopPosition(int count) {
 }
 
 boolean HdlcFrameBuffer::spaceAvailable() {
-  int result = _popPosition - _pushPosition;
-  if (result <= 0) {
-    result += BUFFER_SIZE;
+  int space = _popPosition - _pushPosition;
+  if (space <= 0) {
+    space += BUFFER_SIZE;
   }
-  return result>4;
+  return space>4;
 }
 

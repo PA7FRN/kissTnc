@@ -17,7 +17,6 @@ class HdlcFrameBuffer {
     void frameEnd();
   private:
     HdlcCrc* _crc;
- // byte _bufferData[BUFFER_SIZE];
     byte* _bufferData;
     boolean _tx;
     int _pushFrameSizeHPos = 0;
