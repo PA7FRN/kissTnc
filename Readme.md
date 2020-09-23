@@ -6,15 +6,17 @@ KissTnc is a C++ implementation of the TNC software for Arduino. It can be used 
 ## Hardware ##
 Hardware can be made around a the Nano or other Arduino board, using the schematic added to this repository.
 Default following pins are used:
- RX LED pin 10 
- TX LED pin 9
- PTT control pin 3
- The used analog input is A0
- The four pins for generating the AFSK modulation signal are pin 4, 5, 6 and 7.
+- RX LED pin 10 
+- TX LED pin 9
+- PTT control pin 3
+- Low level Input select pin 2
+- The used analog input is A0
+- The four pins for generating the AFSK modulation signal are pin 4, 5, 6 and 7.
 
 The PTT and LED pins can be changed in the sketch by editing the defines in KissTnc.ino.
 
 It is advised to use the squelch on the radio to have a good carry detection.
+If the audio level from the transceiver is low (below 1V peak-to-peak), the TNC can be set in the low level mode. To run in low level mode, connect D2 to 5V, and connect R10 to Ref instead of 5V.
 
 ## KISS Protocol ##
 KissTnc is compatible with the KISS protocol as described at:
