@@ -17,7 +17,7 @@
 
 class HdlcTnc {
   public:
-    HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize);
+    HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int lowLevelSelectPin, int rxBufferSize, int txBufferSize);
     void hdlcTask();
     void addByteToTxBuf(byte newByte);
     void addFrameEndToTxBuf();

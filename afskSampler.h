@@ -6,7 +6,7 @@
 
 class AfskSampler {
   public:
-    AfskSampler(HdlcAfskRx* afskRx, HdlcAfskTx* afskTx);
+    AfskSampler(int lowLevelSelectPin, HdlcAfskRx* afskRx, HdlcAfskTx* afskTx);
   private:
 };
 
