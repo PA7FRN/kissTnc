@@ -34,7 +34,7 @@
 
 class Kiss {
   public:
-    Kiss(int bdRate, int rxIndicationPin,  int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize);
+    Kiss(int bdRate, int rxIndicationPin,  int txIndicationPin, int pttPin, int lowLevelSelectPin, int rxBufferSize, int txBufferSize);
     void begin();
     void kissTask();
   private:

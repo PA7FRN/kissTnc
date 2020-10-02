@@ -43,10 +43,10 @@ byte HdlcAfskTx::encodeSample() {
   if (_runToZero) {
     if (_n7_5deg < SPACE_SAMPLE_DEG_STEP) {
       _n7_5deg = 0;
-      _ready = true;
       _runToZero = false;
       _ready = true;
       PORTD = ANALOG_ZERO;
+      loopBackSample = ANALOG_ZERO;
     }
   }
   else {

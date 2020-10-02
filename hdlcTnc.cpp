@@ -1,12 +1,12 @@
 #include "hdlcTnc.h"
 
-HdlcTnc::HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int rxBufferSize, int txBufferSize) {
+HdlcTnc::HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int lowLevelSelectPin, int rxBufferSize, int txBufferSize) {
   _crcTable = new HdlcCrcTable();
   _rxBuffer = new HdlcFrameBuffer(false, _crcTable, rxBufferSize);
   _txBuffer = new HdlcFrameBuffer(true , _crcTable, txBufferSize);
   _afskRx   = new HdlcAfskRx(_rxBuffer);
   _afskTx   = new HdlcAfskTx(_txBuffer);
-  _afskSampler = new AfskSampler(_afskRx, _afskTx);
+  _afskSampler = new AfskSampler(lowLevelSelectPin, _afskRx, _afskTx);
   if (rxIndicationPin > 0 ) {
     pinMode(rxIndicationPin, OUTPUT);
     _rxIndicationPin = rxIndicationPin;
