@@ -1,6 +1,9 @@
 #include "hdlcTnc.h"
 
-HdlcTnc::HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int lowLevelSelectPin, int rxBufferSize, int txBufferSize) {
+HdlcTnc::HdlcTnc(
+  int rxIndicationPin, int txIndicationPin, int rxOnlyPin, int pttPin, 
+  int lowLevelSelectPin, int rxBufferSize, int txBufferSize
+) {
   _crcTable = new HdlcCrcTable();
   _rxBuffer = new HdlcFrameBuffer(false, _crcTable, rxBufferSize);
   _txBuffer = new HdlcFrameBuffer(true , _crcTable, txBufferSize);
@@ -14,6 +17,10 @@ HdlcTnc::HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int lowLe
   if (txIndicationPin > 0 ) {
     pinMode(txIndicationPin, OUTPUT);
     _txIndicationPin = txIndicationPin;
+  }
+  if (rxOnlyPin > 0 ) {
+    pinMode(rxOnlyPin, INPUT_PULLUP);
+    _rxOnlyPin = rxOnlyPin;
   }
   if (pttPin > 0 ) {
     pinMode(pttPin, OUTPUT);
@@ -84,11 +91,15 @@ void HdlcTnc::hdlcTask() {
 }
 
 void HdlcTnc::addByteToTxBuf(byte newByte) {
-  _txBuffer->push(newByte);
+  if (digitalRead(_rxOnlyPin) == HIGH) {
+    _txBuffer->push(newByte);
+  }
 }
 
 void HdlcTnc::addFrameEndToTxBuf() {
-  _txBuffer->frameEnd();
+  if (digitalRead(_rxOnlyPin) == HIGH) {
+    _txBuffer->frameEnd();
+  }
 }
 
 void HdlcTnc::resetTxFrame() {

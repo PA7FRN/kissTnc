@@ -17,7 +17,10 @@
 
 class HdlcTnc {
   public:
-    HdlcTnc(int rxIndicationPin, int txIndicationPin, int pttPin, int lowLevelSelectPin, int rxBufferSize, int txBufferSize);
+    HdlcTnc(
+      int rxIndicationPin, int txIndicationPin, int rxOnlyPin, int pttPin, 
+      int lowLevelSelectPin, int rxBufferSize, int txBufferSize
+    );
     void hdlcTask();
     void addByteToTxBuf(byte newByte);
     void addFrameEndToTxBuf();
@@ -38,6 +41,7 @@ class HdlcTnc {
     int _rxIndicationPin = 0;
     int _txIndicationPin = 0;
     int _pttPin = 0;
+    int _rxOnlyPin = 0;
     byte _persistence = DEFAULT_PERSISTENCE;
     int _slotTime = DEFAULT_SLOT_TIME;
     boolean _fullDuplex = false;
