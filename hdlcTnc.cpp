@@ -29,7 +29,7 @@ HdlcTnc::HdlcTnc(
 }
 
 void HdlcTnc::hdlcTask() {
-  if (_afskRx->carryDetect) {
+  if (_afskRx->receiving) {
     digitalWrite(_rxIndicationPin, HIGH);
   }
   else {
@@ -45,7 +45,7 @@ void HdlcTnc::hdlcTask() {
           _hdlcState = HS_TX_FRAME;
         }
         else {
-          if (_afskRx->carryDetect) {
+          if (_afskRx->receiving) {
             _hdlcState = HS_WAIT_FOR_FREE_CHANNEL;
           }
           else {
@@ -57,7 +57,7 @@ void HdlcTnc::hdlcTask() {
       }
       break;
     case HS_WAIT_FOR_FREE_CHANNEL:
-      if (!_afskRx->carryDetect) {
+      if (!_afskRx->receiving) {
         if (random(RANDOM_VAL_LIMIT) > _persistence) {
           _randomWaitTimeOutTime = millis() + _slotTime;
           _hdlcState = HS_RANDOM_WAIT;
@@ -70,7 +70,7 @@ void HdlcTnc::hdlcTask() {
       }
       break;
     case HS_RANDOM_WAIT:
-      if (_afskRx->carryDetect) {
+      if (_afskRx->receiving) {
         _hdlcState = HS_WAIT_FOR_FREE_CHANNEL;
       }
       else {

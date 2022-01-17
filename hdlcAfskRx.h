@@ -15,8 +15,6 @@
 #define STUF1 0x7c
 #define STUF2 0x7d
 
-#define CARRIER_DETECTION_LEVEL 99
-#define CARRIER_OFF_SAMPLE_COUNT 200
 #define RX_AN_SAMPLE_COUNT 8
 #define MAX_RX_AN_SAMPLE_INDEX 7
 #define WINDOW_SAMPLE_COUNT 64
@@ -27,12 +25,9 @@ class HdlcAfskRx {
   public:
     HdlcAfskRx(HdlcFrameBuffer* rxBuffer);
     void decodeSample(byte sampleVal);
-    boolean carryDetect = false;
+    boolean receiving = false;
   private:
     HdlcFrameBuffer* _rxBuffer;
-    int _signalStrength = 0;
-    int _carryDetectOffCount = 0;
-    int _carryDetectOnCount = 0;
     int _rxFilter[2][2];
     int _rxAnSamples[RX_AN_SAMPLE_COUNT];
     int _rxAnSampleIndex   = 0;

@@ -7,13 +7,6 @@ HdlcAfskRx::HdlcAfskRx(HdlcFrameBuffer* rxBuffer) {
 void HdlcAfskRx::decodeSample(byte sampleVal) {
   int intAnVal = sampleVal - 127;
 
-  if (intAnVal > 0) {
-    _signalStrength += intAnVal;
-  }
-  else {
-    _signalStrength -= intAnVal;
-  }
-
   _rxFilter[0][0] = _rxFilter[0][1];
   _rxFilter[0][1] = (_rxAnSamples[_histAnSampleIndex] * intAnVal) >> 2;
   _rxFilter[1][0] = _rxFilter[1][1];
@@ -26,25 +19,6 @@ void HdlcAfskRx::decodeSample(byte sampleVal) {
   _rxAnSampleIndex++;
   if (_rxAnSampleIndex > MAX_RX_AN_SAMPLE_INDEX) {
     _rxAnSampleIndex = 0;
-    if (_signalStrength > CARRIER_DETECTION_LEVEL) { 
-      _carryDetectOffCount = 0;
-    }
-    else {
-      _carryDetectOnCount = 0;
-    }
-    if (carryDetect) {
-      _carryDetectOffCount++;
-      if (_carryDetectOffCount > CARRIER_OFF_SAMPLE_COUNT) { 
-        carryDetect = false;
-      }
-    }
-    else {
-      _carryDetectOnCount++;
-      if (_carryDetectOnCount > 2) {
-        carryDetect = true;
-      }
-    }
-    _signalStrength = 0;
   }  
   _spaceMarkSamples <<= 1;
   _spaceMarkSamples |= (_rxFilter[1][1] > 0) ? 1 : 0; 
@@ -135,6 +109,7 @@ void HdlcAfskRx::setNextMark(boolean spaceMark) {
       if (_rxBitCount > 7) {
         if (!flagDetect) {
           _frameRxState = RXST_START;
+		  receiving = true;
           if (!_rxBuffer->push(_afskShiftInReg)) {
             _frameRxState = RXST_IDLE;
           }
@@ -145,11 +120,13 @@ void HdlcAfskRx::setNextMark(boolean spaceMark) {
       if (flagDetect) {
         _rxBitCount = 0;
         _frameRxState = RXST_SYNC1;
+        receiving = false;
         _rxBuffer->frameEnd();
       }
       else if (_rxBitCount > 7) {
         if (!_rxBuffer->push(_afskShiftInReg)) {
           _frameRxState = RXST_IDLE;
+          receiving = false;
         }
       }
       break; 
