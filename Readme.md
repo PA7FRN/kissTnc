@@ -2,7 +2,7 @@
 
 ## Description ##
 
-KissTnc is a C++ implementation of the TNC software for Arduino. It can be used for AX.25 / packet radio as well as for APRS applications. It is tested on the Arduino Nano and is compatible with the MicroAPRS. See http://unsigned.io/projects/microaprs/ for more information on MicroAPRS. The sketch and all used cpp and header files can be opened in the Arduino IDE.
+KissTnc is a C++ implementation of the TNC software for Arduino. It can be used for AX.25 / packet radio as well as for APRS applications. It is tested on the Arduino Nano and is compatible with MicroAPRS and PA4RAZ APRS projects. The sketch and all used cpp and header files can be opened in the Arduino IDE.
 
 ## Hardware ##
 
@@ -19,7 +19,7 @@ By default the following pins are used:
 
 The PTT, LED, RX only and level selection pins can be changed in the sketch by editing the defines in KissTnc.ino.
 
-It is advised to use the squelch on the radio to have a good carry detection.
+The squelch on the radio can stay open, detection of incomming data (and collision prevention) is done by software.
 If the audio level from the transceiver is low (below 1V peak-to-peak), the TNC can be set in the low level mode. To run in low level mode, connect D2 to 5V, and connect R10 to Ref instead of 5V.
 
 Rx only mode can be activated by connecting the RX only input (pin D9) to GND via a switch.
