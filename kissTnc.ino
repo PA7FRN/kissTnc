@@ -1,9 +1,9 @@
 #include "kiss.h"
 
 #define KISS_BD 9600
-#define RX_LED  10 // 13 for PI4RAZ APRS_iGate
+#define RX_LED /*10*/ 13 // for PI4RAZ APRS_iGate
 #define TX_LED   9
-#define RX_ONLY  8 // 10 for PI4RAZ APRS_iGate (not used)
+#define RX_ONLY /*8*/ 10 // for PI4RAZ APRS_iGate (not used)
 #define PTT_PIN  3
 #define LOW_LEVEL_SELECT 2
 #define RX_BUFFER_SIZE 500
